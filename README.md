@@ -1,4 +1,4 @@
-# Jeli — Quest Journal 🫐👑
+# Jeli — Quest Journal
 
 A gamified to-do list with a retro 2D pixel-RPG aesthetic. Complete
 quests, earn random loot, and keep your active quest log under control —
@@ -9,14 +9,14 @@ Dropped log.
 
 ```bash
 npm install
-npm run dev        # http://localhost:5173
+npm run dev       
 ```
 
 ## Build for web
 
 ```bash
-npm run build       # outputs to ./dist
-npm run preview     # preview the production build locally
+npm run build     
+npm run preview  
 ```
 
 ## Configuration
