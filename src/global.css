@@ -1,0 +1,134 @@
+/**
+ * Jeli — Global Stylesheet
+ * ------------------------
+ * Base styles, the pixel-RPG design system's `:root` color variables, and
+ * the `.pixel-*` component classes shared across every screen.
+ *
+ * The `:root` custom properties below mirror `THEME_COLORS` in
+ * src/config/theme.config.ts, which is the *canonical* source Tailwind
+ * itself reads from (see tailwind.config.ts). These CSS variables exist
+ * only for the handful of spots that can't use a Tailwind utility class
+ * (raw inline SVG fills, etc.) — if you change a color, update both.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+
+  --color-cyan-primary: #00c7ff;
+  --color-cyan-deep: #0cb4e3;
+  --color-cyan-soft: #9ecff9;
+  --color-cyan-accent: #5cdbff;
+  --color-cyan-highlight: #7ce2ff;
+
+  --color-bg-ice: #dbf7ff;
+
+  --color-purple-fab: #8b5cf6;
+  --color-purple-deep: #6d28d9;
+  --color-purple-highlight: #c4b5fd;
+
+  --color-emerald-done: #10b981;
+  --color-emerald-deep: #047857;
+  --color-emerald-soft: #a7f3d0;
+
+  --color-gold: #f5b700;
+  --color-gold-deep: #c98a00;
+  --color-gold-highlight: #ffe38a;
+
+  --color-ruby-dropped: #ef4444;
+  --color-ruby-deep: #b91c1c;
+  --color-ruby-soft: #fca5a5;
+}
+
+* {
+  image-rendering: pixelated;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: "Silkscreen", monospace;
+  background-color: #dbf7ff;
+  background-image: linear-gradient(rgba(12, 180, 227, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(12, 180, 227, 0.1) 1px, transparent 1px);
+  background-size: 16px 16px;
+  -webkit-font-smoothing: none;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #9ecff9;
+  border-radius: 999px;
+}
+
+@layer components {
+  /*
+   * Every pixel-btn-* variant shares one press behavior: translate down by
+   * the same 2px and swap to that color's own "-active" shadow (a flatter
+   * version of its resting shadow), so pressing any button in the app
+   * feels identical regardless of color. Only the FAB (purple) is taller
+   * and moves 3px since it sits proud of the nav bar with a bigger shadow.
+   */
+
+  /* 3D outset pixel button — the base interactive surface used everywhere */
+  .pixel-btn {
+    @apply select-none border-2 border-cyan-deep rounded-pill font-pixel text-white
+      shadow-pixel-cyan active:shadow-pixel-cyan-active active:translate-y-[2px]
+      transition-transform duration-100 ease-out bg-cyan-primary;
+  }
+
+  .pixel-btn-purple {
+    @apply select-none border-2 border-purple-deep rounded-full font-pixel text-white
+      shadow-pixel-purple active:shadow-pixel-purple-active active:translate-y-[3px]
+      transition-transform duration-100 ease-out bg-purple-fab;
+  }
+
+  .pixel-btn-gold {
+    @apply select-none border-2 border-gold-deep rounded-pill font-pixel text-white
+      shadow-pixel-gold active:shadow-pixel-gold-active active:translate-y-[2px]
+      transition-transform duration-100 ease-out bg-gold;
+  }
+
+  .pixel-btn-emerald {
+    @apply select-none border-2 border-emerald-deep rounded-pill font-pixel text-white
+      shadow-pixel-emerald active:shadow-pixel-emerald-active active:translate-y-[2px]
+      transition-transform duration-100 ease-out bg-emerald-done;
+  }
+
+  .pixel-btn-ruby {
+    @apply select-none border-2 border-ruby-deep rounded-pill font-pixel text-white
+      shadow-pixel-ruby active:shadow-pixel-ruby-active active:translate-y-[2px]
+      transition-transform duration-100 ease-out bg-ruby-dropped;
+  }
+
+  /* Rounded pill container / card frame — used for task cards, panels, modals */
+  .pixel-card {
+    @apply bg-white border-2 border-cyan-deep rounded-3xl shadow-pixel-card;
+  }
+
+  .pixel-panel {
+    @apply bg-bg-ice border-2 border-cyan-deep rounded-3xl;
+  }
+
+  .pixel-input {
+    @apply w-full bg-white border-2 border-cyan-soft rounded-2xl px-4 py-3 font-body text-sm
+      text-cyan-deep placeholder:text-cyan-soft outline-none focus:border-cyan-primary transition-colors;
+  }
+
+  .pixel-badge {
+    @apply flex items-center justify-center rounded-full border-2 font-pixel text-[10px];
+  }
+}

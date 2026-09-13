@@ -1,0 +1,31 @@
+.backdrop {
+  @apply fixed inset-0 z-50 flex items-end justify-center bg-cyan-deep/40 backdrop-blur-sm sm:items-center;
+}
+
+.panel {
+  @apply relative w-full max-w-md rounded-t-3xl border-b-0 p-5 pb-8 sm:rounded-3xl sm:border-b-2;
+}
+
+.closeButton {
+  @apply absolute -top-4 right-4 flex h-9 w-9 items-center justify-center !bg-ruby-dropped !border-ruby-deep;
+}
+
+.heading {
+  @apply mb-4 font-pixel text-[13px] text-cyan-deep;
+}
+
+.form {
+  @apply flex flex-col gap-3;
+}
+
+.textInput {
+  @apply normal-case placeholder:normal-case;
+}
+
+.textArea {
+  @apply min-h-[90px] resize-none normal-case placeholder:normal-case;
+}
+
+.saveButton {
+  @apply mt-2 w-full py-3 text-xs disabled:opacity-40;
+}

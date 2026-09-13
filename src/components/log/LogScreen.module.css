@@ -1,0 +1,30 @@
+.content {
+  @apply flex flex-col gap-3 px-4 pt-4;
+}
+
+/* Done/Dropped switcher lives in the scrollable content, not the fixed
+   header — keeps the header itself a plain, slim title bar that looks
+   identical across every screen. */
+.tabSwitcher {
+  @apply flex rounded-pill border-2 border-cyan-deep bg-white p-1;
+}
+
+.tabButton {
+  @apply flex-1 rounded-pill border-2 py-2 font-pixel text-[9px] transition-colors border-transparent text-slate-400;
+}
+
+.tabButtonActiveDone {
+  @apply bg-emerald-done text-white border-emerald-deep;
+}
+
+.tabButtonActiveDropped {
+  @apply bg-ruby-dropped text-white border-ruby-deep;
+}
+
+.emptyState {
+  @apply px-4 py-10 text-center;
+}
+
+.emptyText {
+  @apply font-pixel text-[10px] text-cyan-deep;
+}

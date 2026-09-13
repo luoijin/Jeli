@@ -1,0 +1,36 @@
+.backdrop {
+  @apply fixed inset-0 z-[60] flex items-center justify-center bg-cyan-deep/50 px-6 backdrop-blur-sm;
+}
+
+.panel {
+  @apply relative w-full max-w-xs px-6 pb-6 pt-10 text-center;
+}
+
+.eyebrow {
+  @apply font-pixel text-[10px] text-cyan-primary;
+}
+
+.taskTitle {
+  @apply mt-1 truncate font-body text-xs text-slate-400;
+}
+
+.imageFrame {
+  @apply my-6 mx-auto flex h-32 w-32 items-center justify-center overflow-hidden rounded-2xl border-4
+    border-gold-deep bg-gold/15;
+}
+
+.image {
+  @apply h-full w-full object-cover;
+}
+
+.name {
+  @apply font-pixel text-[12px] text-cyan-deep;
+}
+
+.quantity {
+  @apply mt-2 font-pixel text-[10px] text-gold-deep;
+}
+
+.claimButton {
+  @apply mt-6 w-full py-3 text-[10px];
+}

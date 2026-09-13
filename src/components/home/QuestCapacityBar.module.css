@@ -1,0 +1,23 @@
+.wrapper {
+  @apply flex items-center gap-3;
+}
+
+.track {
+  @apply flex h-6 flex-1 gap-1 rounded-pill border-2 border-cyan-deep bg-cyan-soft/40 p-1;
+}
+
+.segment {
+  @apply flex-1 rounded-pill transition-colors duration-300;
+}
+
+.segmentFilled {
+  @apply bg-cyan-primary;
+}
+
+.segmentEmpty {
+  @apply bg-cyan-soft/60;
+}
+
+.badge {
+  @apply h-7 min-w-[52px] border-cyan-deep bg-white px-2 text-cyan-deep;
+}

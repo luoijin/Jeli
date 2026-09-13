@@ -1,0 +1,58 @@
+/**
+ * TaskCard.module.css
+ * --------------------
+ * The single tappable quest row on Home. Layout only — the outer frame's
+ * color/border/shadow comes from the shared `.pixel-card` class.
+ */
+
+.card {
+  @apply flex cursor-pointer items-stretch gap-3 p-3 select-none;
+}
+
+.indexBadge {
+  @apply flex h-10 w-10 shrink-0 items-center justify-center self-start rounded-full border-2 border-cyan-deep
+    bg-cyan-primary font-pixel text-xs text-white;
+}
+
+.body {
+  @apply min-w-0 flex-1 py-0.5;
+}
+
+.title {
+  @apply font-pixel text-[11px] leading-relaxed text-cyan-deep;
+}
+
+.titleTruncated {
+  @apply truncate;
+}
+
+.titleWrapped {
+  @apply whitespace-normal break-words;
+}
+
+.hint {
+  @apply mt-0.5 block font-body text-[9px] tracking-wide text-cyan-deep/55;
+}
+
+/*
+ * `overflow: hidden` here is what makes the height animation on the
+ * description read as a smooth accordion collapse rather than a jump cut —
+ * Motion animates this wrapper's `height` between 0 and its measured
+ * "auto" value (see TaskCard.tsx), so any content taller than the
+ * animated box must be clipped mid-transition, not reflow the layout.
+ */
+.description {
+  @apply overflow-hidden whitespace-normal break-words font-body text-xs text-slate-500;
+}
+
+.actions {
+  @apply flex shrink-0 flex-col items-center justify-center gap-2;
+}
+
+.editButton {
+  @apply pixel-btn flex h-9 w-9 items-center justify-center !bg-cyan-accent;
+}
+
+.completeButton {
+  @apply pixel-btn-emerald flex h-9 w-9 items-center justify-center;
+}

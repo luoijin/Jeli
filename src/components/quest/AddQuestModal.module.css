@@ -1,0 +1,42 @@
+.backdrop {
+  @apply fixed inset-0 z-50 flex items-end justify-center bg-cyan-deep/40 backdrop-blur-sm sm:items-center;
+}
+
+.panel {
+  @apply relative w-full max-w-md rounded-t-3xl border-b-0 p-5 pb-8 sm:rounded-3xl sm:border-b-2;
+}
+
+.closeButton {
+  @apply absolute -top-4 right-4 flex h-9 w-9 items-center justify-center !bg-ruby-dropped !border-ruby-deep;
+}
+
+.heading {
+  @apply mb-4 font-pixel text-[13px] text-cyan-deep;
+}
+
+.overflowWarning {
+  @apply mb-4 rounded-2xl border-2 border-gold bg-gold/10 px-3 py-2 font-body text-xs text-gold-deep;
+}
+
+.form {
+  @apply flex flex-col gap-3;
+}
+
+/*
+ * Title/description are free-form quest text, not shouted labels, so the
+ * font's default case must never be overridden by a global uppercase rule
+ * — see `autoCapitalize`/`autoCorrect` on the inputs in AddQuestModal.tsx
+ * for the half of this fix that stops the *device keyboard* from
+ * capitalizing on its own.
+ */
+.textInput {
+  @apply normal-case placeholder:normal-case;
+}
+
+.textArea {
+  @apply min-h-[90px] resize-none normal-case placeholder:normal-case;
+}
+
+.submitButton {
+  @apply mt-2 w-full py-3 text-xs disabled:opacity-40;
+}

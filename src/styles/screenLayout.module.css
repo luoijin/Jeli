@@ -1,0 +1,24 @@
+/**
+ * screenLayout.module.css
+ * ------------------------
+ * Shared by every top-level screen (Home, Gallery, Log, Settings). Centers
+ * the screen's content column, caps it at the same max width as the header
+ * and bottom nav, and reserves top/bottom offsets so content never sits
+ * underneath the fixed header or the floating bottom nav.
+ *
+ * `padding-top` reads the `--jeli-header-height` custom property rather
+ * than a hardcoded value. The screen sets that variable inline from
+ * `LAYOUT_CONFIG.headerHeightPx` (see `ScreenHeader.tsx`), so this file
+ * never needs to be touched if the header height changes.
+ */
+
+.screenBody {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  width: 100%;
+  max-width: 28rem; /* matches Tailwind's max-w-md, shared with header/nav */
+  flex-direction: column;
+  padding-bottom: 8rem;
+  padding-top: calc(var(--jeli-header-height, 52px) + env(safe-area-inset-top));
+}

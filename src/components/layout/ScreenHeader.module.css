@@ -1,0 +1,30 @@
+/**
+ * ScreenHeader.module.css
+ * ------------------------
+ * The slim, fixed title bar shown at the top of every screen (Home,
+ * Gallery, Log, Settings). Height is driven by the `--jeli-header-height`
+ * custom property (set inline from `LAYOUT_CONFIG.headerHeightPx`) so this
+ * file automatically tracks config changes without edits.
+ */
+
+.header {
+  @apply fixed inset-x-0 top-0 z-30 border-b-2 border-cyan-deep bg-white shadow-pixel-card;
+  padding-top: env(safe-area-inset-top);
+}
+
+.row {
+  @apply mx-auto flex w-full max-w-md items-center gap-2 px-4;
+  height: var(--jeli-header-height, 52px);
+}
+
+.iconSlot {
+  @apply flex h-7 w-7 shrink-0 items-center justify-center;
+}
+
+.title {
+  @apply truncate font-pixel text-[12px] leading-none text-cyan-deep;
+}
+
+.rightSlot {
+  @apply ml-auto flex shrink-0 items-center;
+}

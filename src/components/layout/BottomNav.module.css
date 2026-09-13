@@ -1,0 +1,58 @@
+.nav {
+  @apply fixed inset-x-0 bottom-0 z-40 flex justify-center px-4;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+/*
+ * 5 equal-width grid columns: two nav items, a dead-center spacer column
+ * for the FAB, then two more nav items. Because every column has identical
+ * width, the middle column's midpoint is guaranteed to sit exactly at 50%
+ * of the bar's width regardless of icon spacing. The bar itself only needs
+ * to be tall enough for the icons now that labels are gone, and the FAB is
+ * anchored to the bar's *top edge* (not its vertical center) so it nests
+ * into the carved notch consistently no matter how the bar's height changes.
+ */
+.barGrid {
+  @apply relative grid h-16 w-full max-w-md grid-cols-5 items-center;
+}
+
+.barSvg {
+  @apply pointer-events-none absolute inset-0 h-full w-full drop-shadow-[0_3px_0_rgba(12,180,227,0.35)];
+}
+
+.barPath {
+  @apply fill-white stroke-cyan-deep;
+}
+
+.navButton {
+  @apply relative z-10 flex items-center justify-self-center rounded-full p-2;
+}
+
+.navIconActive {
+  @apply text-cyan-primary;
+}
+
+.navIconInactive {
+  @apply text-cyan-soft;
+}
+
+/*
+ * Centering and floating are split across two elements on purpose: the CSS
+ * keyframe animation on the button sets `transform: translateY(...)`
+ * directly, which would otherwise overwrite (not combine with) the
+ * `-translate-x-1/2 -translate-y-1/2` utility classes used to center it —
+ * silently knocking the button off center toward the Log side. This
+ * wrapper handles centering; the inner button only ever animates its own
+ * translateY.
+ */
+.fabWrapper {
+  @apply absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2;
+}
+
+.fabButton {
+  @apply flex h-16 w-16 items-center justify-center animate-float-y;
+}
+
+.fabGlyph {
+  @apply font-pixel text-2xl leading-none;
+}

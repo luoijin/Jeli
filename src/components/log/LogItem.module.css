@@ -1,0 +1,44 @@
+.row {
+  @apply flex items-center gap-3 p-3;
+}
+
+.rowDone {
+  @apply border-emerald-deep;
+}
+
+.rowDropped {
+  @apply border-ruby-deep;
+}
+
+.body {
+  @apply min-w-0 flex-1;
+}
+
+.title {
+  @apply truncate font-pixel text-[10px];
+}
+
+.titleDone {
+  @apply text-emerald-deep;
+}
+
+.titleDropped {
+  @apply text-ruby-deep;
+}
+
+.timestamp {
+  @apply mt-1 font-body text-[11px] text-slate-400;
+}
+
+.rewardChip {
+  @apply flex h-8 shrink-0 items-center gap-1 rounded-full border-2 border-gold-deep bg-gold/15 py-1 pl-1 pr-2
+    text-gold-deep;
+}
+
+.rewardIcon {
+  @apply h-6 w-6 rounded-full object-cover;
+}
+
+.rewardCount {
+  @apply font-pixel text-[8px];
+}

@@ -1,0 +1,15 @@
+/**
+ * GalleryScreen.module.css
+ * -------------------------
+ * The Trophy Gallery grid. The collected-count is shown once, in the
+ * header's `right` slot (see GalleryScreen.tsx) — no duplicate counter
+ * lives in the scroll body.
+ */
+
+.lootGrid {
+  @apply grid grid-cols-2 gap-3 px-4 pt-4 xs:grid-cols-3;
+}
+
+.headerCount {
+  @apply font-pixel text-xs text-cyan-deep;
+}

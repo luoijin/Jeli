@@ -1,0 +1,83 @@
+.content {
+  @apply flex flex-col gap-5 px-4 pt-5;
+}
+
+/* Account */
+.profileSection {
+  @apply flex items-center gap-4 p-4;
+}
+
+.avatar {
+  @apply flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-cyan-deep
+    bg-cyan-soft/40 text-3xl text-cyan-deep;
+}
+
+.profileInfo {
+  @apply min-w-0 flex-1;
+}
+
+.nameInput {
+  @apply py-1.5 text-sm uppercase;
+}
+
+.nameDisplay {
+  @apply truncate font-pixel text-[12px] uppercase text-cyan-deep;
+}
+
+.levelBadge {
+  @apply mt-2 inline-flex h-6 w-fit border-gold-deep bg-gold/15 px-2 text-gold-deep;
+}
+
+.editProfileButton {
+  @apply flex h-9 w-9 shrink-0 items-center justify-center !bg-cyan-accent;
+}
+
+/* Audio */
+.audioSection {
+  @apply flex flex-col gap-4 p-4;
+}
+
+.sectionHeading {
+  @apply font-pixel text-[10px] text-cyan-deep;
+}
+
+.volumeRow {
+  @apply flex items-center gap-3;
+}
+
+.muteButton {
+  @apply flex h-10 w-10 shrink-0 items-center justify-center;
+}
+
+.volumeSlider {
+  @apply h-3 flex-1 appearance-none rounded-pill bg-cyan-soft accent-cyan-primary;
+}
+
+.volumeValue {
+  @apply w-10 text-right font-pixel text-[9px] text-cyan-deep;
+}
+
+.audioActions {
+  @apply flex gap-3;
+}
+
+.audioActionButton {
+  @apply flex-1 py-2 text-[9px];
+}
+
+/* About */
+.aboutSection {
+  @apply flex flex-col gap-1 p-4 text-center;
+}
+
+.aboutTitle {
+  @apply font-pixel text-[11px] text-cyan-deep;
+}
+
+.aboutVersion {
+  @apply font-body text-xs text-slate-500;
+}
+
+.aboutCopyright {
+  @apply font-body text-[11px] text-slate-400;
+}

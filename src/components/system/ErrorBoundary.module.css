@@ -1,0 +1,15 @@
+.fallback {
+  @apply flex min-h-screen w-full flex-col items-center justify-center gap-4 px-6 text-center;
+}
+
+.title {
+  @apply font-pixel text-[13px] text-cyan-deep;
+}
+
+.message {
+  @apply font-body text-xs text-slate-500;
+}
+
+.reloadButton {
+  @apply px-6 py-3 text-[10px];
+}

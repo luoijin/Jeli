@@ -1,0 +1,24 @@
+.screen {
+  @apply fixed inset-0 z-[100] flex w-full flex-col items-center justify-center gap-6 border-0 bg-bg-ice
+    bg-grid-ice bg-grid-16 outline-none;
+}
+
+.mascot {
+  @apply h-36 w-36 drop-shadow-lg;
+}
+
+.titleBlock {
+  @apply flex flex-col items-center gap-1;
+}
+
+.title {
+  @apply font-pixel text-[24px] tracking-wide text-cyan-deep;
+}
+
+.tagline {
+  @apply font-pixel text-[9px] text-cyan-primary;
+}
+
+.prompt {
+  @apply mt-6 font-pixel text-[10px] text-cyan-deep;
+}

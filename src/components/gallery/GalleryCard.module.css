@@ -1,0 +1,43 @@
+.card {
+  @apply relative flex aspect-square flex-col items-center justify-center gap-2 p-2 text-left transition-transform;
+}
+
+.cardUnlocked {
+  @apply border-cyan-deep active:scale-95;
+}
+
+.cardLocked {
+  @apply border-slate-300 cursor-default;
+}
+
+/*
+ * Overflow-hidden lives on this inner wrapper, not the outer button/card.
+ * The quantity badge below is positioned slightly outside the card's edge
+ * (-top-2 -right-2) on purpose, so it needs the outer element to stay
+ * un-clipped — putting overflow-hidden there instead was cutting the
+ * badge off before it could render fully.
+ */
+.imageFrame {
+  @apply relative h-full w-full overflow-hidden rounded-2xl;
+}
+
+.image {
+  @apply h-full w-full object-cover;
+}
+
+.imageLocked {
+  @apply grayscale blur-[2px] opacity-50;
+}
+
+.nameTag {
+  @apply absolute bottom-1 left-1 right-1 truncate rounded-full bg-white/85 px-2 py-1 text-center font-pixel
+    text-[7px] leading-none text-cyan-deep;
+}
+
+.lockOverlay {
+  @apply absolute inset-0 flex items-center justify-center bg-white/30;
+}
+
+.quantityBadge {
+  @apply absolute -top-2 -right-2 z-10 h-6 min-w-[28px] border-gold-deep bg-gold px-1 text-white;
+}
