@@ -4,6 +4,15 @@
 
 .panel {
   @apply relative w-full max-w-md rounded-t-3xl border-b-0 p-5 pb-8 sm:rounded-3xl sm:border-b-2;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+@media (min-width: 640px) {
+  .panel {
+    border-bottom-left-radius: 1.5rem !important;
+    border-bottom-right-radius: 1.5rem !important;
+  }
 }
 
 .closeButton {
