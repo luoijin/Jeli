@@ -54,11 +54,19 @@ npm run cap:build:apk
   [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md)
 - Global configuration reference:
   [`docs/CONFIGURATION.md`](./docs/CONFIGURATION.md)
-- Supabase/PostgreSQL DDL (optional cloud sync backend):
-  [`supabase/schema.sql`](./supabase/schema.sql)
+
+## Offline & data
+
+Jeli is **fully offline — there is no backend, no account, and no network
+call anywhere in the app.** All quests, rewards, and settings live only on
+the device that created them, in native on-device storage (Android
+SharedPreferences via `@capacitor/preferences`, `localStorage` in the web
+preview) — see [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) for the
+full picture. Uninstalling the app or clearing its storage is the only
+way to lose data; there's nothing to log into and nothing to sync.
 
 ## Stack
 
 React 18 + Vite + TypeScript · Tailwind CSS (tokens sourced from
-`src/config/theme.config.ts`) · Framer Motion · Zustand (local-first,
-persisted to `localStorage`) · Capacitor (Android) · Supabase (optional).
+`src/config/theme.config.ts`) · Framer Motion · Zustand (persisted via
+`@capacitor/preferences`) · Capacitor (Android).

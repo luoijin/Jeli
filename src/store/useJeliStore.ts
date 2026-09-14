@@ -1,8 +1,9 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 import type { AudioSettings, Task, UserProfile, UserRewardEntry } from "../types";
 import { REWARD_CATALOG, rollRandomReward } from "../lib/rewards";
 import { audioManager } from "../lib/audioManager";
+import { preferencesStorage } from "../lib/storage";
 import { AUDIO_CONFIG, DEFAULT_PROFILE, GAME_RULES, STORAGE_KEYS } from "../config";
 
 /** @deprecated import `GAME_RULES.maxActiveTasks` from `../config` instead. Kept for backward compatibility. */
@@ -19,6 +20,12 @@ interface JeliState {
   profile: UserProfile;
   audio: AudioSettings;
   pendingReward: PendingReward | null;
+  /** True once the on-device store has finished loading from Preferences.
+   *  Unlike synchronous localStorage, a native storage read is async, so
+   *  there's a brief window on cold start where this is false — gate any
+   *  render that would otherwise flash default/empty data on it. */
+  hasHydrated: boolean;
+  setHasHydrated: (value: boolean) => void;
 
   // derived-friendly selectors kept as plain functions (not persisted)
   getActiveTasks: () => Task[];
@@ -51,6 +58,8 @@ export const useJeliStore = create<JeliState>()(
       profile: { ...DEFAULT_PROFILE },
       audio: { volume: AUDIO_CONFIG.defaultVolume, muted: AUDIO_CONFIG.defaultMuted },
       pendingReward: null,
+      hasHydrated: false,
+      setHasHydrated: (value) => set({ hasHydrated: value }),
 
       getActiveTasks: () => get().tasks.filter((t) => t.status === "active"),
       getDoneTasks: () =>
@@ -147,6 +156,9 @@ export const useJeliStore = create<JeliState>()(
     }),
     {
       name: STORAGE_KEYS.store,
+      /** The app's on-device "database" — see src/lib/storage.ts. Native
+       *  SharedPreferences on Android, localStorage in the web/dev preview. */
+      storage: createJSONStorage(() => preferencesStorage),
       partialize: (state) => ({
         tasks: state.tasks,
         rewards: state.rewards,
@@ -178,6 +190,12 @@ export const useJeliStore = create<JeliState>()(
           ...persisted,
           rewards: reconciledRewards,
         };
+      },
+      /** Marks hydration complete once the async Preferences read resolves
+       *  (or immediately, with `hasHydrated: true`, if there was nothing
+       *  persisted yet — e.g. first-ever app launch). */
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true);
       },
     }
   )

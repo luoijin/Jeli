@@ -20,6 +20,7 @@
 
 .title {
   @apply font-pixel text-[11px] leading-relaxed text-cyan-deep;
+  text-transform: uppercase;
 }
 
 .titleTruncated {

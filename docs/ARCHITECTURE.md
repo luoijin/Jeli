@@ -13,22 +13,17 @@ flowchart TB
         UI["UI Components<br/>Home / Gallery / Log / Config"]
         Store["Zustand Store<br/>useJeliStore.ts"]
         Audio["Audio Manager<br/>(Web Audio synth SFX + HTMLAudioElement ambient loop)"]
-        Persist["zustand/persist<br/>localStorage adapter"]
+        Persist["zustand/persist<br/>storage.ts adapter"]
         UI -->|reads/dispatches| Store
-        Store -->|writes on change| Persist
-        Persist -->|hydrates on load| Store
+        Store -->|writes on change, async| Persist
+        Persist -->|hydrates on load, async| Store
         UI -->|play(sfxKey)| Audio
     end
 
     subgraph Native["Capacitor Shell (Android)"]
+        Prefs[("Preferences plugin<br/>-> Android SharedPreferences<br/>the on-device database")]
         WebView["Android WebView"]
         Gradle["Gradle Build<br/>(APK / AAB output)"]
-    end
-
-    subgraph Backend["Supabase Backend (optional cloud sync)"]
-        Auth["Supabase Auth"]
-        DB[("PostgreSQL<br/>users / tasks / rewards / user_rewards")]
-        RLS["Row Level Security Policies"]
     end
 
     AppConfig -->|game rules, defaults, copy| UI
@@ -42,23 +37,27 @@ flowchart TB
 
     Client -- "npx cap sync" --> Native
     Native -- "renders dist/ bundle" --> WebView
-    WebView -.->|optional network sync| Backend
-    Store -.->|supabaseClient.ts<br/>when VITE_SUPABASE_* set| Auth
-    Auth --> DB
-    DB --- RLS
+    Persist -->|"@capacitor/preferences bridge"| Prefs
 ```
+
+There is no backend, no network call, and no cloud sync anywhere in this
+diagram — that's deliberate. Jeli is a fully offline app: every box above
+either runs on-device (the WebView/JS layer) or is on-device native
+storage (`Prefs`). The app has no concept of a signed-in user or a server
+to be unreachable from.
 
 ## 2. State Management Strategy
 
-Jeli is **local-first**: every interaction (add / edit / complete / drop a
-quest, claim a reward, change settings) writes synchronously to the
-Zustand store, which is the single source of truth for the UI. This keeps
-the app fully usable offline and gives instant, lag-free interactions —
-critical for a gamified to-do app where the reward pop and drop animation
-need to feel immediate.
+Jeli is **fully offline, on-device only**: every interaction (add / edit /
+complete / drop a quest, claim a reward, change settings) writes
+synchronously to the Zustand store, which is the single source of truth
+for the UI, and is then persisted to native on-device storage. There is
+no server, no account, and nothing that requires a network connection —
+the app works identically with the radio off.
 
 - **Store**: `src/store/useJeliStore.ts` — one flat Zustand store holding
-  `tasks`, `rewards`, `profile`, `audio`, and the transient `pendingReward`.
+  `tasks`, `rewards`, `profile`, `audio`, the transient `pendingReward`,
+  and a `hasHydrated` flag (see below).
 - **Configuration**: `src/config/app.config.ts` and
   `src/config/theme.config.ts` are the single source of truth for every
   business rule, default value, piece of copy, and design token in the
@@ -68,25 +67,38 @@ need to feel immediate.
   (`STORAGE_KEYS.store`) are read from `app.config.ts` rather than
   hardcoded, so changing the active-quest cap or the starting profile is
   a one-line edit in config, not a hunt through components.
-- **Persistence**: the `zustand/middleware persist` wrapper serializes the
-  store (minus transient UI state) to `localStorage` under the key
-  `STORAGE_KEYS.store` (`jeli-app-storage`) on every mutation, and
-  rehydrates it on app boot. This satisfies the "Local-First Persistent
-  State" requirement without any network dependency. Swapping the storage
-  engine for IndexedDB (via a library like `idb-keyval`) is a drop-in
-  change to the `persist` config's `storage` option if larger payloads
-  are anticipated.
-- **Optional cloud sync**: `src/lib/supabaseClient.ts` only instantiates a
-  Supabase client if `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` are
-  present in the environment. When enabled, a thin sync layer (not wired
-  by default) can push/pull the same shape of data to the schema in
-  `supabase/schema.sql`, using `user_id = auth.uid()` for isolation.
+- **The on-device database**: `src/lib/storage.ts` implements zustand's
+  `StateStorage` interface on top of `@capacitor/preferences`. The
+  `zustand/middleware persist` wrapper uses it to serialize the store
+  (minus transient UI state) under the key `STORAGE_KEYS.store`
+  (`jeli-app-storage`) on every mutation, and rehydrate it on app boot.
+  `@capacitor/preferences` writes through to **Android SharedPreferences**
+  on-device when running as the packaged APK, and to `localStorage` when
+  running in a plain browser (`npm run dev` / `npm run preview`) — same
+  adapter, same code path, no environment branching. This *is* Jeli's
+  database: there's no SQL, no separate schema file, and nothing to
+  migrate — the shape of the data is just the shape of the `JeliState`
+  TypeScript interface.
+- **Async hydration**: unlike raw `localStorage`, a native Preferences
+  read is asynchronous, so the store starts as its default (empty) state
+  for a brief moment on cold start before the persisted data loads. The
+  store's `hasHydrated` flag flips to `true` once that read resolves
+  (`onRehydrateStorage` in `useJeliStore.ts`), and `App.tsx` keeps the
+  intro screen up until it does — so the UI never flashes default/empty
+  data before a player's real quests appear. In practice this resolves in
+  single-digit milliseconds, well inside the intro's own tap-to-enter
+  animation delay, so it's only ever visible on an unusually slow device.
 - **Business logic lives in the store, not components.** The active-task
   cap, the random-overflow drop, and the reward roll are all pure store
   actions (`addTask`, `completeTask`) reading their limits from
   `GAME_RULES`, so they're unit-testable independent of the UI and there's
   a single, auditable place where "what happens when the cap is exceeded"
   is decided.
+- **No sync, by design.** Data is scoped to the single device it was
+  created on. There's no account system to build "which device is this"
+  around, and adding one would cut against the "fully offline" goal — if
+  cross-device sync is ever wanted later, it would need to be
+  reintroduced deliberately (e.g. an opt-in backend), not assumed.
 
 ## 3. Random Overflow Mechanic — Sequence
 
@@ -135,8 +147,6 @@ jeli-app/
 │   ├── ARCHITECTURE.md
 │   ├── CONFIGURATION.md
 │   └── CAPACITOR_BUILD_GUIDE.md
-├── supabase/
-│   └── schema.sql
 ├── public/
 │   ├── jeli-mascot.png
 │   └── audio/
@@ -158,7 +168,7 @@ jeli-app/
 │   │   ├── audioManager.ts
 │   │   ├── interactionSynth.ts  # Web Audio-synthesized SFX (click/add/drop/complete/reward)
 │   │   ├── rewards.ts
-│   │   └── supabaseClient.ts
+│   │   └── storage.ts           # Capacitor Preferences adapter — the on-device database
 │   └── components/
 │       ├── layout/
 │       │   ├── BottomNav.tsx

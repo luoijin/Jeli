@@ -19,6 +19,7 @@ export default function App() {
   const [addOpen, setAddOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const audio = useJeliStore((s) => s.audio);
+  const hasHydrated = useJeliStore((s) => s.hasHydrated);
 
   // The Zustand store is the single source of truth for volume/mute (it's
   // what the Settings slider reads and writes). Hydrate the audio manager
@@ -43,7 +44,11 @@ export default function App() {
     return () => document.removeEventListener("click", handleClick, true);
   }, []);
 
-  if (!entered) {
+  // Keep showing the intro (rather than mounting a screen that reads the
+  // store) until the on-device data has actually loaded. In practice this
+  // resolves in a few ms — well inside the intro's own tap-to-enter delay
+  // — so this only ever matters on an unusually slow cold start.
+  if (!entered || !hasHydrated) {
     return <IntroScreen onEnter={() => setEntered(true)} />;
   }
 
