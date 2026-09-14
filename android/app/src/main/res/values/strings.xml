@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Jeli</string>
+    <string name="title_activity_main">Jeli</string>
+    <string name="package_name">com.jeli.questjournal</string>
+    <string name="custom_url_scheme">com.jeli.questjournal</string>
+</resources>

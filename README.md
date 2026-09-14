@@ -54,16 +54,18 @@ npm run cap:build:apk
   [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md)
 - Global configuration reference:
   [`docs/CONFIGURATION.md`](./docs/CONFIGURATION.md)
+- Enterprise security baseline & OWASP MASVS controls:
+  [`docs/SECURITY.md`](./docs/SECURITY.md)
 
-## Offline & data
+## Offline, sandboxing & data security
 
-Jeli is **fully offline — there is no backend, no account, and no network
-call anywhere in the app.** All quests, rewards, and settings live only on
-the device that created them, in native on-device storage (Android
-SharedPreferences via `@capacitor/preferences`, `localStorage` in the web
-preview) — see [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) for the
-full picture. Uninstalling the app or clearing its storage is the only
-way to lose data; there's nothing to log into and nothing to sync.
+Jeli is **fully offline and air-gapped — there is no backend, no account, and
+no network call anywhere in the app.**
+- **Zero Permissions:** `AndroidManifest.xml` declares no network or hardware permissions (`android.permission.INTERNET` is omitted).
+- **Cleartext Blocked & Cloud Backup Disabled:** `usesCleartextTraffic="false"`, `allowBackup="false"`, and `fullBackupContent="false"` protect local data from unencrypted transmission or cloud drive leaks.
+- **On-Device Sandbox:** All quests, rewards, and settings live only in native private internal storage (Android SharedPreferences with `MODE_PRIVATE` via `@capacitor/preferences`, `localStorage` in the web preview).
+- **Hardened Release Builds:** Compiled with R8 byte-code optimization, minification, and resource shrinking (`minifyEnabled true`, `shrinkResources true`).
+See [`docs/SECURITY.md`](./docs/SECURITY.md) for the complete security specification.
 
 ## Stack
 

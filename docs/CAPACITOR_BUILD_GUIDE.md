@@ -75,11 +75,11 @@ cd android
 ./gradlew assembleRelease
 ```
 
-Output lands at:
+`buildTypes.release` is configured with **R8 byte-code optimization, minification, and resource shrinking** (`minifyEnabled true`, `shrinkResources true`) using `proguard-android-optimize.txt` and custom keep rules in `proguard-rules.pro`.
 
-```
-android/app/build/outputs/apk/release/app-release-unsigned.apk
-```
+Outputs land at:
+* Unsigned release APK: `android/app/build/outputs/apk/release/app-release-unsigned.apk`
+* ProGuard / R8 mapping file: `android/app/build/outputs/mapping/release/mapping.txt`
 
 ## 6. Sign and align the APK
 
