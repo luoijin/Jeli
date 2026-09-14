@@ -72,3 +72,10 @@ See [`docs/SECURITY.md`](./docs/SECURITY.md) for the complete security specifica
 React 18 + Vite + TypeScript · Tailwind CSS (tokens sourced from
 `src/config/theme.config.ts`) · Framer Motion · Zustand (persisted via
 `@capacitor/preferences`) · Capacitor (Android).
+
+## License
+
+Copyright © 2026 luoijin. All rights reserved.
+
+No part of this project may be copied, distributed, or modified without the express written permission of the author.
+
