@@ -8,8 +8,6 @@ const config: CapacitorConfig = {
   webDir: "dist",
   server: {
     androidScheme: "https",
-    url: "http://10.0.2.2:5173", // Points to your host machine's localhost
-    cleartext: true
   },
   android: {
     backgroundColor: THEME_COLORS.bg.ice,
