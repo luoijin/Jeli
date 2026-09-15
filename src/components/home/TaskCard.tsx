@@ -119,27 +119,6 @@ export default function TaskCard({ task, index, onEdit, onComplete }: TaskCardPr
         </div>
 
         <div className={styles.actions}>
-          <AnimatePresence initial={false}>
-            {revealed && (
-              <motion.button
-                key="edit"
-                type="button"
-                aria-label="Edit quest"
-                initial={{ opacity: 0, scale: 0.6, y: -4 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.6, y: -4 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onEdit(task);
-                }}
-                className={styles.editButton}
-              >
-                <Pencil size={14} />
-              </motion.button>
-            )}
-          </AnimatePresence>
-
           <motion.button
             type="button"
             aria-label="Complete quest"
@@ -152,6 +131,27 @@ export default function TaskCard({ task, index, onEdit, onComplete }: TaskCardPr
           >
             <Check size={16} strokeWidth={3} />
           </motion.button>
+
+          <AnimatePresence initial={false}>
+            {revealed && (
+              <motion.button
+                key="edit"
+                type="button"
+                aria-label="Edit quest"
+                initial={{ opacity: 0, scale: 0.6, y: 4 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.6, y: 4 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onEdit(task);
+                }}
+                className={styles.editButton}
+              >
+                <Pencil size={14} />
+              </motion.button>
+            )}
+          </AnimatePresence>
         </div>
       </motion.div>
     </MotionConfig>
