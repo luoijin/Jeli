@@ -5,6 +5,11 @@ quests, earn random loot, and keep your active quest log under control —
 only 5 quests can be active at once, so a 6th randomly bumps one to the
 Dropped log.
 
+## Download Application
+
+Click below to download the latest Android APK directly to your phone:
+
+[![Download Android APK](https://img.shields.io/badge/Download-jeli--quest--journal.apk-7C3AED?style=for-the-badge&logo=android&logoColor=white)](https://github.com/luoijin/Jeli/releases/download/v1.0.0/jeli-quest-journal.apk)
 ## Quick start
 
 ```bash
