@@ -52,9 +52,13 @@ export const THEME_FONTS = {
   body: ["'Silkscreen'", "monospace"],
 } as const;
 
-/** Google Fonts stylesheet link loaded in `index.html` for the families above. */
-export const THEME_FONT_STYLESHEET_URL =
-  "https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap";
+/**
+ * Font files are self-hosted via `@fontsource/press-start-2p` and
+ * `@fontsource/silkscreen`, imported directly in `src/global.css`.
+ * Vite bundles the woff2 files into the build output, so the app has
+ * zero external font requests — required since the APK runs fully
+ * offline on-device.
+ */
 
 export const THEME_SHADOWS = {
   "pixel-cyan": "0 4px 0 0 #0CB4E3, inset 0 2px 0 0 #7CE2FF",
