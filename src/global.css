@@ -12,17 +12,11 @@
  */
 
 /**
- * Self-hosted pixel fonts (via @fontsource). Bundled into the build by
- * Vite — no network request, no CDN, works fully offline in the APK.
- * Only the latin + latin-ext subsets are pulled in; we don't need
- * Cyrillic/Greek glyphs for this app.
+ * Self-hosted pixel fonts (via @fontsource) are imported in `main.tsx`
+ * as JS module imports, not here as a CSS `@import` — that's what
+ * bundles them offline into the build without depending on Vite's
+ * CSS-level bare-specifier resolution.
  */
-@import "@fontsource/press-start-2p/latin.css";
-@import "@fontsource/press-start-2p/latin-ext.css";
-@import "@fontsource/silkscreen/latin-400.css";
-@import "@fontsource/silkscreen/latin-ext-400.css";
-@import "@fontsource/silkscreen/latin-700.css";
-@import "@fontsource/silkscreen/latin-ext-700.css";
 
 @tailwind base;
 @tailwind components;
