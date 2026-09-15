@@ -50,7 +50,7 @@
  * still wrapping long lines instead of overflowing the card.
  */
 .description {
-  @apply overflow-hidden whitespace-pre-wrap break-words font-body text-xs text-slate-500;
+  @apply mt-1 overflow-hidden whitespace-pre-wrap break-words font-body text-xs text-slate-500;
 }
 
 .actions {

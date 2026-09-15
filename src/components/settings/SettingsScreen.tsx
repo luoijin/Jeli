@@ -26,6 +26,9 @@ export default function SettingsScreen() {
     setMuted(!audio.muted);
   }
 
+  const effectiveVolume = audio.muted ? AUDIO_CONFIG.minVolume : audio.volume;
+  const isSilent = effectiveVolume <= AUDIO_CONFIG.minVolume;
+
   return (
     <div className={screenLayout.screenBody} style={HEADER_OFFSET_STYLE}>
       <ScreenHeader title={SCREEN_TITLES.settings} />
@@ -69,23 +72,23 @@ export default function SettingsScreen() {
           <div className={styles.volumeRow}>
             <button
               type="button"
-              aria-label={audio.muted ? "Unmute" : "Mute"}
+              aria-label={isSilent ? "Unmute" : "Mute"}
               onClick={handleMuteToggle}
               className={cx("pixel-btn", styles.muteButton)}
             >
-              {audio.muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+              {isSilent ? <VolumeX size={18} /> : <Volume2 size={18} />}
             </button>
 
             <input
               type="range"
               min={AUDIO_CONFIG.minVolume}
               max={AUDIO_CONFIG.maxVolume}
-              value={audio.muted ? AUDIO_CONFIG.minVolume : audio.volume}
+              value={effectiveVolume}
               onChange={(e) => setVolume(Number(e.target.value))}
               className={styles.volumeSlider}
             />
 
-            <span className={styles.volumeValue}>{audio.muted ? AUDIO_CONFIG.minVolume : audio.volume}</span>
+            <span className={styles.volumeValue}>{effectiveVolume}</span>
           </div>
 
           <div className={styles.audioActions}>
