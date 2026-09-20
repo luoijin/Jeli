@@ -10,6 +10,9 @@ Dropped log.
 Click below to download the latest Android APK directly to your phone:
 
 [![Download Android APK](https://img.shields.io/badge/Download-jeli--quest--journal.apk-7C3AED?style=for-the-badge&logo=android&logoColor=white)](https://github.com/luoijin/Jeli/releases/download/v1.0.0/jeli-quest-journal.apk)
+
+[![Total Downloads](https://img.shields.io/github/downloads/luoijin/Jeli/total?style=for-the-badge&logo=android&logoColor=white&color=7C3AED)](https://github.com/luoijin/Jeli/releases)
+
 ## Quick start
 
 ```bash
@@ -77,6 +80,10 @@ See [`docs/SECURITY.md`](./docs/SECURITY.md) for the complete security specifica
 React 18 + Vite + TypeScript · Tailwind CSS (tokens sourced from
 `src/config/theme.config.ts`) · Framer Motion · Zustand (persisted via
 `@capacitor/preferences`) · Capacitor (Android).
+
+## Credits
+
+Reward/loot artwork used in the Gallery collection is from Friendly Rivalry and is not original work — used here for personal, non-commercial project purposes only.
 
 ## License
 
